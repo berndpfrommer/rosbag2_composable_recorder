@@ -15,10 +15,6 @@ mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
 git clone https://github.com/berndpfrommer/rosbag2_composable_recorder
 cd ..
-```
-
-Now configure and build:
-```
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
 . install/setup.bash
 ```
@@ -45,16 +41,16 @@ the process.
 ## Parameters
 
 - ``bag_prefix``: prefix of directory name used for storage. A
-    timestamp will be appended
-- ``topics``: (default: empty) array of strings that specifies the topics to record
-- ``record_all``: (default: False) when this is set, all topics are recorded
+    timestamp will be appended.
+- ``topics``: (default: empty) array of strings that specifies the topics to record.
+- ``record_all``: (default: False) when this is set, all topics are recorded.
 - ``disable_discovery``: (default: False) disable discovery of topics
     that occured after recording was launched.
-- ``storage_id``: (default: sqlite3) storage container format
-- ``serialization_format``: (default: cdr) serialization format
+- ``storage_id``: (default: sqlite3) storage container format.
+- ``serialization_format``: (default: cdr) serialization format.
 - ``start_recording_immediately``: (default: False) do not wait for
     service call before recording is started.
-```
+
 To stop the recording you have to kill (Ctrl-C) the recording driver.
 
 ## License
