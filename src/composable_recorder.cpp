@@ -34,8 +34,11 @@ static std::string get_time_stamp()
 }
 
 ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
-: rosbag2_transport::Recorder("recorder", options)
+: rosbag2_transport::Recorder(
+    "recorder", rclcpp::NodeOptions(options).start_parameter_event_publisher(false))
 {
+  Recorder::writer_ = std::make_shared<rosbag2_cpp::Writer>();
+
   std::vector<std::string> topics =
     declare_parameter<std::vector<std::string>>("topics", std::vector<std::string>());
   for (const auto topic : topics) {
@@ -54,7 +57,7 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   ropt.topic_polling_interval = std::chrono::milliseconds(100);
   ropt.topics.insert(ropt.topics.end(), topics.begin(), topics.end());
 
-  // stop_discovery_ = ropt.is_discovery_disabled;
+  stop_discovery_ = ropt.is_discovery_disabled;
   if (declare_parameter<bool>("start_recording_immediately", false)) {
     record();
   } else {
