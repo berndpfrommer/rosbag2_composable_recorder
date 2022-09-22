@@ -13,6 +13,7 @@ Create a workspace (e.g. ``ros2_ws``), clone this repo, and build:
 ```
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
+git clone -b galactic https://github.com/ros2/rosbag2.git
 git clone https://github.com/berndpfrommer/rosbag2_composable_recorder
 cd ..
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
