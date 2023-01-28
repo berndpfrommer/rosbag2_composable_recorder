@@ -48,6 +48,7 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   rosbag2_storage::StorageOptions & sopt = storage_options_;
   sopt.storage_id = declare_parameter<std::string>("storage_id", "sqlite3");
   sopt.uri = declare_parameter<std::string>("bag_prefix", "rosbag2_") + get_time_stamp();
+  sopt.max_cache_size = declare_parameter<int>("max_cache_size", 100 * 1024 * 1024);
 
   // set recorder options
   rosbag2_transport::RecordOptions & ropt = record_options_;

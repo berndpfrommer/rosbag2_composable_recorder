@@ -49,6 +49,8 @@ the process.
     that occured after recording was launched.
 - ``storage_id``: (default: sqlite3) storage container format.
 - ``serialization_format``: (default: cdr) serialization format.
+- ``max_cache_size``: (default: 100MB) size (in bytes) of cache before
+    writing to disk. See ``ros2 bag record --help`` for more.
 - ``start_recording_immediately``: (default: False) do not wait for
     service call before recording is started.
 
