@@ -35,13 +35,13 @@ static std::string get_time_stamp()
 
 ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
 : rosbag2_transport::Recorder(
-    "recorder", rclcpp::NodeOptions(options).start_parameter_event_publisher(false))
+    std::make_shared<rosbag2_cpp::Writer>(), rosbag2_storage::StorageOptions(),
+    rosbag2_transport::RecordOptions(), "recorder",
+    rclcpp::NodeOptions(options).start_parameter_event_publisher(false))
 {
-  Recorder::writer_ = std::make_shared<rosbag2_cpp::Writer>();
-
   std::vector<std::string> topics =
     declare_parameter<std::vector<std::string>>("topics", std::vector<std::string>());
-  for (const auto topic : topics) {
+  for (const auto & topic : topics) {
     RCLCPP_INFO_STREAM(get_logger(), "recording topic: " << topic);
   }
   // set storage options
