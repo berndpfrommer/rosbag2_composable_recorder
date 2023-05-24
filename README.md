@@ -36,13 +36,14 @@ To actually start the recording you will have to make a service call
 ```
 ros2 service call /start_recording std_srvs/srv/Trigger
 ```
-At the moment there is no way to stop a recording other than killing
-the process.
+To stop the recording you have to kill (Ctrl-C) the recording driver.
 
 ## Parameters
 
-- ``bag_prefix``: prefix of directory name used for storage. A
-    timestamp will be appended.
+- ``bag_name``: (default: empty) prefix of directory name used for bag.
+- ``bag_prefix``: (default: ``rosbag_2``) prefix of directory name used for storage. A
+    timestamp will be appended. This parameter is only used when no
+    ``bag_name`` is specified.
 - ``topics``: (default: empty) array of strings that specifies the topics to record.
 - ``record_all``: (default: False) when this is set, all topics are recorded.
 - ``disable_discovery``: (default: False) disable discovery of topics
@@ -54,7 +55,6 @@ the process.
 - ``start_recording_immediately``: (default: False) do not wait for
     service call before recording is started.
 
-To stop the recording you have to kill (Ctrl-C) the recording driver.
 
 ## License
 
