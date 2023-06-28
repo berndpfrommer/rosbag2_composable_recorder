@@ -31,10 +31,14 @@ it to your liking, then launch it.
 ros2 launch rosbag2_composable_recorder recorder.launch.py
 
 ```
-To actually start the recording you will have to make a service call
-(unless you set the parameter ``start_recording_immediately``):
+Setting the parameter ``start_recording_immediately`` will cause the
+recording to start immediately. To start the recording later:
 ```
 ros2 service call /start_recording std_srvs/srv/Trigger
+```
+Alternatively, use the python script:
+```
+ros2 run rosbag2_composable_recorder start_recording.py
 ```
 To stop the recording you have to kill (Ctrl-C) the recording driver.
 

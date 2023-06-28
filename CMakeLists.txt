@@ -69,6 +69,10 @@ install(TARGETS
   composable_recorder_node
   DESTINATION lib/${PROJECT_NAME}/)
 
+install(PROGRAMS
+  src/start_recording.py
+  DESTINATION lib/${PROJECT_NAME}/)
+
 install(DIRECTORY
   launch
   DESTINATION share/${PROJECT_NAME}/
