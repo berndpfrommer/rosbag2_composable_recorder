@@ -32,8 +32,6 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_auto REQUIRED)
-find_package(ament_cmake_ros REQUIRED)
-
 
 set(ROS2_DEPENDENCIES
   "rclcpp"
