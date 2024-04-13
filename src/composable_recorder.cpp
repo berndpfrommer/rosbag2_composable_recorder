@@ -72,9 +72,13 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   ropt.topic_polling_interval = std::chrono::milliseconds(100);
   ropt.topics.insert(ropt.topics.end(), topics.begin(), topics.end());
 
+#ifdef USE_NEW_ACCESORS
   if (ropt.is_discovery_disabled) {
     stop_discovery();
   }
+#else
+  stop_discovery_ = ropt.is_discovery_disabled;
+#endif
 
   if (declare_parameter<bool>("start_recording_immediately", false)) {
     record();
