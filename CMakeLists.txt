@@ -41,10 +41,13 @@ set(ROS2_DEPENDENCIES
   "std_srvs"
   "rosbag2_transport"
 )
-
 foreach(pkg ${ROS2_DEPENDENCIES})
   find_package(${pkg} REQUIRED)
 endforeach()
+
+if(${rosbag2_transport_VERSION} VERSION_GREATER_EQUAL 0.25.0)
+  add_definitions(-DUSE_NEW_ACCESSORS)
+endif()
 
 ament_auto_find_build_dependencies(REQUIRED ${ROS2_DEPENDENCIES})
 
