@@ -45,7 +45,7 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
     RCLCPP_INFO_STREAM(get_logger(), "recording topic: " << topic);
   }
   // set storage options
-#ifdef USE_NEW_ACCESSORS
+#ifdef USE_GET_STORAGE_OPTIONS
   rosbag2_storage::StorageOptions & sopt = get_storage_options();
 #else
   rosbag2_storage::StorageOptions & sopt = storage_options_;
@@ -60,7 +60,7 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   }
 
   // set recorder options
-#ifdef USE_NEW_ACCESSORS
+#ifdef USE_GET_RECORD_OPTIONS
   rosbag2_transport::RecordOptions & ropt = get_record_options();
 #else
   rosbag2_transport::RecordOptions & ropt = record_options_;
@@ -68,7 +68,6 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
 #ifdef USE_ALL_TOPICS
   ropt.all_topics = declare_parameter<bool>("record_all", false);
 #else
-  rosbag2_transport::RecordOptions & ropt = record_options_;
   ropt.all = declare_parameter<bool>("record_all", false);
 #endif
   ropt.is_discovery_disabled = declare_parameter<bool>("disable_discovery", false);
@@ -77,7 +76,7 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   ropt.topics.insert(ropt.topics.end(), topics.begin(), topics.end());
 
   if (ropt.is_discovery_disabled) {
-#ifdef USE_NEW_ACCESSORS
+#ifdef USE_STOP_DISCOVERY
     stop_discovery();
 #else
     stop_discovery_ = ropt.is_discovery_disabled;
