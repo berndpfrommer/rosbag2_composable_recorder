@@ -60,7 +60,7 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   }
 
   // set recorder options
-#ifdef USE_NEW_ACCESSORS
+#ifdef USE_ALL_TOPICS
   rosbag2_transport::RecordOptions & ropt = get_record_options();
   ropt.all_topics = declare_parameter<bool>("record_all", false);
 #else
