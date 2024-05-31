@@ -43,7 +43,7 @@ foreach(pkg ${ROS2_DEPENDENCIES})
   find_package(${pkg} REQUIRED)
 endforeach()
 
-if(${rosbag2_transport_VERSION} VERSION_GREATER_EQUAL 0.25.0)
+if(${rosbag2_transport_VERSION} VERSION_GREATER_EQUAL 0.22.6)
   add_definitions(-DUSE_NEW_ACCESSORS)
 endif()
 
