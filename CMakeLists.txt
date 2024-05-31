@@ -46,10 +46,10 @@ endforeach()
 if(${rosbag2_transport_VERSION} VERSION_GREATER_EQUAL 0.25.0)
   add_definitions(-DUSE_ALL_TOPICS)
   add_definitions(-DUSE_STOP_DISCOVERY)
-  add_definitions(-DUSE_GET_STORAGE_OPTIONS)
 endif()
 
 if(${rosbag2_transport_VERSION} VERSION_GREATER_EQUAL 0.22.6)
+  add_definitions(-DUSE_GET_STORAGE_OPTIONS)
   add_definitions(-DUSE_GET_RECORD_OPTIONS)
 endif()
 
