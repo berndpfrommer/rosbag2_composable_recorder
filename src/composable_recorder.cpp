@@ -60,8 +60,12 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   }
 
   // set recorder options
-#ifdef USE_ALL_TOPICS
+#ifdef USE_NEW_ACCESSORS
   rosbag2_transport::RecordOptions & ropt = get_record_options();
+#else
+  rosbag2_transport::RecordOptions & ropt = record_options_;
+#endif
+#ifdef USE_ALL_TOPICS
   ropt.all_topics = declare_parameter<bool>("record_all", false);
 #else
   rosbag2_transport::RecordOptions & ropt = record_options_;
@@ -72,13 +76,13 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   ropt.topic_polling_interval = std::chrono::milliseconds(100);
   ropt.topics.insert(ropt.topics.end(), topics.begin(), topics.end());
 
-#ifdef USE_NEW_ACCESSORS
   if (ropt.is_discovery_disabled) {
+#ifdef USE_NEW_ACCESSORS
     stop_discovery();
-  }
 #else
-  stop_discovery_ = ropt.is_discovery_disabled;
+    stop_discovery_ = ropt.is_discovery_disabled;
 #endif
+  }
 
   if (declare_parameter<bool>("start_recording_immediately", false)) {
     record();
