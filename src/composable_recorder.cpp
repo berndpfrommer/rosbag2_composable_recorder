@@ -72,7 +72,7 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   ropt.topic_polling_interval = std::chrono::milliseconds(100);
   ropt.topics.insert(ropt.topics.end(), topics.begin(), topics.end());
 
-#ifdef USE_NEW_ACCESORS
+#ifdef USE_NEW_ACCESSORS
   if (ropt.is_discovery_disabled) {
     stop_discovery();
   }
