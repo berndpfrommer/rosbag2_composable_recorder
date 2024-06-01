@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 project(rosbag2_composable_recorder)
 
 set(CMAKE_CXX_STANDARD 14)
@@ -32,8 +32,6 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(ament_cmake_auto REQUIRED)
-find_package(ament_cmake_ros REQUIRED)
-
 
 set(ROS2_DEPENDENCIES
   "rclcpp"
@@ -41,10 +39,20 @@ set(ROS2_DEPENDENCIES
   "std_srvs"
   "rosbag2_transport"
 )
-
 foreach(pkg ${ROS2_DEPENDENCIES})
   find_package(${pkg} REQUIRED)
 endforeach()
+
+if(${rosbag2_transport_VERSION} VERSION_GREATER_EQUAL 0.25.0)
+  add_definitions(-DUSE_ALL_TOPICS)
+endif()
+
+if(${rosbag2_transport_VERSION} VERSION_GREATER_EQUAL 0.22.6)
+  add_definitions(-DUSE_GET_STORAGE_OPTIONS)
+  add_definitions(-DUSE_GET_RECORD_OPTIONS)
+  add_definitions(-DUSE_STOP_DISCOVERY)
+endif()
+
 
 ament_auto_find_build_dependencies(REQUIRED ${ROS2_DEPENDENCIES})
 
