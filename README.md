@@ -3,9 +3,14 @@
 A composable recorder node for ROS2 to allow recording rosbags without
 inter process communication.
 
+NOTE: If you are running on ROS2 Jazzy or later, do not use this
+repo. A
+[composable recorder node](https://github.com/ros2/rosbag2?tab=readme-ov-file#using-with-composition)
+is now part of the standard rosbag2 framework.
+
 ## Supported platforms
 
-Currently only tested under Ubuntu 20.04. Will require ROS2 Galactic
+Currently only tested under Ubuntu 20.04/22.04. Will require ROS2 Galactic
 or later.
 
 ## How to build
