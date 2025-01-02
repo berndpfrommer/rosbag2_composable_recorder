@@ -88,9 +88,9 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
         &ComposableRecorder::startRecording, this, std::placeholders::_1, std::placeholders::_2));
   }
   stop_service_ = create_service<std_srvs::srv::Trigger>(
-      "stop_recording",
-      std::bind(
-        &ComposableRecorder::stopRecording, this, std::placeholders::_1, std::placeholders::_2));
+    "stop_recording",
+    std::bind(
+      &ComposableRecorder::stopRecording, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 bool ComposableRecorder::startRecording(
