@@ -86,11 +86,15 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   if (declare_parameter<bool>("start_recording_immediately", false)) {
     record();
   } else {
-    service_ = create_service<std_srvs::srv::Trigger>(
+    start_service_ = create_service<std_srvs::srv::Trigger>(
       "start_recording",
       std::bind(
         &ComposableRecorder::startRecording, this, std::placeholders::_1, std::placeholders::_2));
   }
+  stop_service_ = create_service<std_srvs::srv::Trigger>(
+      "stop_recording",
+      std::bind(
+        &ComposableRecorder::stopRecording, this, std::placeholders::_1, std::placeholders::_2));
 }
 
 bool ComposableRecorder::startRecording(
@@ -110,6 +114,31 @@ bool ComposableRecorder::startRecording(
       RCLCPP_INFO(get_logger(), "started recording successfully");
       res->success = true;
       res->message = "started recoding!";
+    } catch (const std::runtime_error & e) {
+      RCLCPP_WARN(get_logger(), "cannot toggle recording!");
+      res->message = "runtime error occurred: " + std::string(e.what());
+    }
+  }
+  return (true);
+}
+
+bool ComposableRecorder::stopRecording(
+  const std::shared_ptr<std_srvs::srv::Trigger::Request> req,
+  std::shared_ptr<std_srvs::srv::Trigger::Response> res)
+{
+  (void)req;
+  res->success = false;
+  if (!isRecording_) {
+    RCLCPP_WARN(get_logger(), "not recording yet!");
+    res->message = "not recording yet!";
+  } else {
+    RCLCPP_INFO(get_logger(), "stopping recording...");
+    try {
+      stop();
+      isRecording_ = false;
+      RCLCPP_INFO(get_logger(), "stopped recording successfully");
+      res->success = true;
+      res->message = "stopped recoding!";
     } catch (const std::runtime_error & e) {
       RCLCPP_WARN(get_logger(), "cannot toggle recording!");
       res->message = "runtime error occurred: " + std::string(e.what());
