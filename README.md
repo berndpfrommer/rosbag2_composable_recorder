@@ -45,7 +45,10 @@ Alternatively, use the python script:
 ```
 ros2 run rosbag2_composable_recorder start_recording.py
 ```
-To stop the recording you have to kill (Ctrl-C) the recording driver.
+To stop the recording you have to kill (Ctrl-C) the recording driver or to call the stop service
+```
+ros2 service call /stop_recording std_srvs/srv/Trigger
+```
 
 ## Parameters
 
