@@ -37,7 +37,9 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
 : rosbag2_transport::Recorder(
     std::make_shared<rosbag2_cpp::Writer>(), rosbag2_storage::StorageOptions(),
     rosbag2_transport::RecordOptions(), "recorder",
-    rclcpp::NodeOptions(options).start_parameter_event_publisher(false))
+    rclcpp::NodeOptions(options).start_parameter_event_publisher(false)),
+  bag_name_(declare_parameter<std::string>("bag_name", "")),
+  bag_prefix_(declare_parameter<std::string>("bag_prefix", "rosbag2_"))
 {
   std::vector<std::string> topics =
     declare_parameter<std::vector<std::string>>("topics", std::vector<std::string>());
@@ -52,12 +54,6 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
 #endif
   sopt.storage_id = declare_parameter<std::string>("storage_id", "sqlite3");
   sopt.max_cache_size = declare_parameter<int>("max_cache_size", 100 * 1024 * 1024);
-  const std::string bag_name = declare_parameter<std::string>("bag_name", "");
-  if (!bag_name.empty()) {
-    sopt.uri = bag_name;
-  } else {
-    sopt.uri = declare_parameter<std::string>("bag_prefix", "rosbag2_") + get_time_stamp();
-  }
 
   // set recorder options
 #ifdef USE_GET_RECORD_OPTIONS
@@ -108,6 +104,16 @@ bool ComposableRecorder::startRecording(
     res->message = "already recording!";
   } else {
     RCLCPP_INFO(get_logger(), "starting recording...");
+#ifdef USE_GET_STORAGE_OPTIONS
+    rosbag2_storage::StorageOptions & sopt = get_storage_options();
+#else
+    rosbag2_storage::StorageOptions & sopt = storage_options_;
+#endif
+    if (!bag_name_.empty()) {
+      sopt.uri = bag_name_;
+    } else {
+      sopt.uri = bag_prefix_ + get_time_stamp();
+    }
     try {
       record();
       isRecording_ = true;

@@ -43,6 +43,8 @@ private:
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr start_service_;
   rclcpp::Service<std_srvs::srv::Trigger>::SharedPtr stop_service_;
   bool isRecording_{false};
+  std::string bag_name_;
+  std::string bag_prefix_;
 };
 
 }  // namespace rosbag2_composable_recorder
