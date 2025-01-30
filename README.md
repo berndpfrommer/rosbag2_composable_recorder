@@ -67,6 +67,12 @@ ros2 service call /stop_recording std_srvs/srv/Trigger
 - ``serialization_format``: (default: cdr) serialization format.
 - ``max_cache_size``: (default: 100MB) size (in bytes) of cache before
     writing to disk. See ``ros2 bag record --help`` for more.
+- ``max_bagfile_size``: (default: 0MB) maximum size a bagfile can be before it is split.
+    A value of 0 indicates that bagfile splitting will not be used.
+    See ``ros2 bag record --help`` for more.
+- ``max_bagfile_duration``: (default: 0s) maximum duration a bagfile can be before it is split.
+    A value of 0 indicates that bagfile splitting will not be used.
+    See ``ros2 bag record --help`` for more.
 - ``start_recording_immediately``: (default: False) do not wait for
     service call before recording is started.
 
