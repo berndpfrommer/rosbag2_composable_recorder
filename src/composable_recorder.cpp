@@ -54,6 +54,8 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
 #endif
   sopt.storage_id = declare_parameter<std::string>("storage_id", "sqlite3");
   sopt.max_cache_size = declare_parameter<int>("max_cache_size", 100 * 1024 * 1024);
+  sopt.max_bagfile_size = declare_parameter<int>("max_bagfile_size", 0);
+  sopt.max_bagfile_duration = declare_parameter<int>("max_bagfile_duration", 0);
 
   // set recorder options
 #ifdef USE_GET_RECORD_OPTIONS
