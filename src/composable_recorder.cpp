@@ -207,7 +207,13 @@ ComposableRecorder::ComposableRecorder(const rclcpp::NodeOptions & options)
   }
 
   if (declare_parameter<bool>("start_recording_immediately", false)) {
+    if (!bag_name_.empty()) {
+      sopt.uri = bag_name_;
+    } else {
+      sopt.uri = bag_prefix_ + get_time_stamp();
+    }
     record();
+    isRecording_ = true;
   } else {
     start_service_ = create_service<std_srvs::srv::Trigger>(
       "start_recording",
